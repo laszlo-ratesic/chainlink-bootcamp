@@ -1,0 +1,33 @@
+// Defines the program as a Solana program
+// Defines the entrypoint for the program as the 'process_instruction' function
+// Creates the process_instruction function
+// **Which calls the process_instruction fn from the Processor implementation
+// **And passes in all the input params received
+
+use crate::processor::Processor;
+
+use solana_program::{
+    account_info::{AccountInfo},
+    entrypoint,
+    entrypoint::ProgramResult,
+    msg,
+    pubkey::Pubkey
+};
+
+// Declare and export the program's entrypoint
+entrypoint!(process_instruction);
+
+fn process_instruction(
+    program_id: &Pubkey,
+    accounts: &[AccountInfo],
+    instruction_data: &[u8],
+) -> ProgramResult {
+    msg!(
+        "process_instruction: {}: {} accounts, data={:?}",
+        program_id,
+        accounts.len(),
+        instruction_data
+    );
+
+    Processor::process_instruction(program_id, accounts, instruction_data)
+}
